@@ -14,7 +14,7 @@ cd geoip-lookup
 ```
 ## Usage
 If you are using python >=2.7 the usage is:
-```
+```text
 usage: lookup [-h] [-n] [-d db path] ip [ip ...]
 
 positional arguments:
@@ -27,7 +27,7 @@ optional arguments:
                         Path to maxmind GeoIP database
 ```
 Other wise it is 
-```
+```text
 Usage: lookup [options] ip [ip ...]
 
 Options:
