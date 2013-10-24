@@ -14,7 +14,7 @@ git clone git@10.16.251.135:security/geoip-lookup.git
 cd geoip-lookup
 ```
 ## Usage
-If you are using python >=2.7 the usage is:
+If you are using python >=2.7 the usage is
 ```
 usage: lookup [-h] [-n] [-d db path] ip [ip ...]
 
