@@ -12,6 +12,7 @@ sudo mv GeoIP.dat /usr/local/share/GeoIP
 ```bash
 git clone git@10.16.251.135:security/geoip-lookup.git
 cd geoip-lookup
+git checkout version1
 ```
 ## Usage
 If you are using python >=2.7 the usage is
