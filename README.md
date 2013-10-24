@@ -7,6 +7,7 @@ gunzip GeoIP.dat.gz
 sudo mkdir -p /usr/local/share/GeoIP
 sudo mv GeoIP.dat /usr/local/share/GeoIP
 ```
+
 ### Clone tool
 ```bash
 git clone git@10.16.251.135:security/geoip-lookup.git
@@ -14,7 +15,7 @@ cd geoip-lookup
 ```
 ## Usage
 If you are using python >=2.7 the usage is:
-```text
+```
 usage: lookup [-h] [-n] [-d db path] ip [ip ...]
 
 positional arguments:
@@ -26,8 +27,10 @@ optional arguments:
   -d db path, --database db path
                         Path to maxmind GeoIP database
 ```
+
 Other wise it is 
-```text
+
+```
 Usage: lookup [options] ip [ip ...]
 
 Options:
