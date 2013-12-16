@@ -11,7 +11,6 @@
 ```bash
 git clone git@10.16.251.135:security/geoip-lookup.git
 cd geoip-lookup
-git checkout version2
 ## Link so you can run it anywhere
 sudo ln -s <path to repo>/lookup.py /usr/bin/lookup
 ```
