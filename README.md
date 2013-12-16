@@ -2,17 +2,16 @@
 ## Installation
 ### Maxmind DB
 ```bash
-wget -N http://geolite.maxmind.com/download/geoip/database/GeoLiteCountry/GeoIP.dat.gz
-gunzip GeoIP.dat.gz
-sudo mkdir -p /usr/local/share/GeoIP
-sudo mv GeoIP.dat /usr/local/share/GeoIP
+./update-geoip.sh country
+./update-geoip.sh city
+./update-geoip.sh asn
 ```
 
 ### Clone tool
 ```bash
 git clone git@10.16.251.135:security/geoip-lookup.git
 cd geoip-lookup
-git checkout version1
+git checkout version2
 ## Link so you can run it anywhere
 sudo ln -s <path to repo>/lookup.py /usr/bin/lookup
 ```
@@ -20,7 +19,9 @@ sudo ln -s <path to repo>/lookup.py /usr/bin/lookup
 If you are using python >=2.7 the usage is
 
 ```
-usage: lookup [-h] [-n] [-d db path] ip [ip ...]
+usage: lookup.py [-h] [-n] [-d <db path>] [-c] [-dc <city db path>] [-a]
+                 [-da <asn db path>]
+                 ip [ip ...]
 
 positional arguments:
   ip                    ip address/es to lookup
@@ -28,18 +29,30 @@ positional arguments:
 optional arguments:
   -h, --help            show this help message and exit
   -n, --name            Print country names instead of country codes
-  -d db path, --database db path
+  -d <db path>, --database <db path>
                         Path to maxmind GeoIP database
+  -c, --city            Do city lookup instead of country
+  -dc <city db path>, --city-database <city db path>
+                        Path to maxmind city lite db
+  -a, --asn             Do ASN lookup
+  -da <asn db path>, --asn-database <asn db path>
+                        Path to maxmind asn lite db
 ```
 
 Other wise it is 
 
 ```
-Usage: lookup [options] ip [ip ...]
+Usage: lookup.py [options] ip [ip ...]
 
 Options:
   -h, --help            show this help message and exit
   -n, --name            Print country name instead of country code
-  -d db path, --database=db path
+  -d <db path>, --database=<db path>
                         Path to maxmind GeoIP database
+  -c, --city            Do city lookup
+  --city-database=<city db path>
+                        Path to maxmind city lite db
+  -a, --asn             Do ASN lookup
+  --asn-database=<asn db path>
+                        Path to maxmind asn lite db
 ```
