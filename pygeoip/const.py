@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 """
-Constants needed for the binary parser. Part of the pygeoip package.
+Constants for the database parser
 
 @author: Jennifer Ennis <zaylea@gmail.com>
+@author: William Tisäter <william@defunct.cc>
 
 @license: Copyright(C) 2004 MaxMind LLC
 
@@ -290,7 +291,7 @@ COUNTRY_CODES3 = (
     'PRI', 'PSE', 'PRT', 'PLW', 'PRY', 'QAT', 'REU', 'ROU', 'RUS', 'RWA',
     'SAU', 'SLB', 'SYC', 'SDN', 'SWE', 'SGP', 'SHN', 'SVN', 'SJM', 'SVK',
     'SLE', 'SMR', 'SEN', 'SOM', 'SUR', 'STP', 'SLV', 'SYR', 'SWZ', 'TCA',
-    'TCD', 'TF', 'TGO', 'THA', 'TJK', 'TKL', 'TLS', 'TKM', 'TUN', 'TON', 'TUR',
+    'TCD', 'TF', 'TGO', 'THA', 'TJK', 'TKL', 'TKM', 'TUN', 'TON', 'TLS', 'TUR',
     'TTO', 'TUV', 'TWN', 'TZA', 'UKR', 'UGA', 'UM', 'USA', 'URY', 'UZB', 'VAT',
     'VCT', 'VEN', 'VGB', 'VIR', 'VNM', 'VUT', 'WLF', 'WSM', 'YEM', 'YT', 'SRB',
     'ZAF', 'ZMB', 'MNE', 'ZWE', 'A1', 'A2', 'O1', 'ALA', 'GGY', 'IMN', 'JEY',
@@ -382,6 +383,10 @@ CONTINENT_NAMES = (
     'NA', 'NA', 'AF'
 )
 
+NETSPEED_NAMES = (
+    'Unknown', 'Dial-up', 'Cable', 'Corporate'
+)
+
 # storage / caching flags
 STANDARD = 0
 MEMORY_CACHE = 1
@@ -407,9 +412,11 @@ ORG_EDITION = 5
 ISP_EDITION = 4
 ASNUM_EDITION = 9
 ASNUM_EDITION_V6 = 21
+NETSPEED_EDITION = 10
 # Not yet supported databases
 PROXY_EDITION = 8
-NETSPEED_EDITION = 11
+NETSPEED_EDITION_REV1 = 32
+NETSPEED_EDITION_REV1_V6 = 33
 
 # Collection of databases
 IPV6_EDITIONS = (COUNTRY_EDITION_V6, ASNUM_EDITION_V6, CITY_EDITION_REV1_V6)

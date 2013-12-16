@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 """
-Utility functions. Part of the pygeoip package.
+Utility function for address translation
 
 @author: Jennifer Ennis <zaylea@gmail.com>
+@author: William Tisäter <william@defunct.cc>
 
 @license: Copyright(C) 2004 MaxMind LLC
 
@@ -23,6 +24,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/lgpl.txt>.
 import socket
 import binascii
 
+try:
+    from StringIO import StringIO
+except ImportError:
+    from io import StringIO, BytesIO
+
+from pygeoip import const
+
 
 def ip2long(ip):
     """
@@ -34,3 +42,15 @@ def ip2long(ip):
         return int(binascii.hexlify(socket.inet_aton(ip)), 16)
     except socket.error:
         return int(binascii.hexlify(socket.inet_pton(socket.AF_INET6, ip)), 16)
+
+
+def str2fp(data):
+    """
+    Convert bytes data to file handle object
+
+    @param data: string data
+    @type data: str
+    @return: file handle object
+    @rtype: StringIO or BytesIO
+    """
+    return BytesIO(bytearray(data, const.ENCODING)) if const.PY3 else StringIO(data)
