@@ -89,8 +89,6 @@ def main():
 			ltype = "country"
 			db = args.db
 
-	print db
-	#exit()
 	## Verify shiz
 	## IP addresses
 	if not verifyIPs(ips):
