@@ -58,7 +58,7 @@ def main():
 			lType = "asn"
 			db = options.asndb
 		else:
-			ltype = "country"
+			lType = "country"
 			db = options.db
 		name = options.name
 	else:
