@@ -12,7 +12,7 @@
 git clone git@10.16.251.135:security/geoip-lookup.git
 cd geoip-lookup
 ## Link so you can run it anywhere
-sudo ln -s <path to repo>/lookup.py /usr/bin/lookup
+sudo ln -s $PWD/lookup.py /usr/bin/lookup
 ```
 ## Usage
 If you are using python >=2.7 the usage is
