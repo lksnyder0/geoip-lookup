@@ -21,18 +21,34 @@ function update {
 	mv `ls -1 | cut -d "." -f -2` $LOCATION
 }
 
-mkdir $LOCATION
+function country {
+	echo "Updating country database"
+	update $GEOLITE_COUNTRY $GEOLITE_COUNTRY_NAME
+}
+
+function city {
+	echo "Updating city database"
+	update $GEOLITE_CITY $GEOLITE_CITY_NAME
+}
+
+function asn {
+	echo "Updating ASN database"
+	update $GEOLITE_ASN $GEOLITE_ASN_NAME
+}
+
+mkdir -p $LOCATION
 
 case $1 in
-	country) 	echo "Updating country database"
-				update $GEOLITE_COUNTRY $GEOLITE_COUNTRY_NAME
+	all) 		country
+				city
+				asn
 				;;
-	city)		echo "Updating city database"
-				update $GEOLITE_CITY $GEOLITE_CITY_NAME
+	country)	country
 				;;
-	asn)		echo "Updating ASN database"
-				update $GEOLITE_ASN $GEOLITE_ASN_NAME
+	city)		city
 				;;
-	*)			echo "$0 [country|city|asn|help]"
+	asn)		asn
+				;;
+	*)			echo "$0 [country|city|asn|all|help]"
 				;;
 esac

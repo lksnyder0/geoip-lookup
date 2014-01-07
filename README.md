@@ -2,9 +2,7 @@
 ## Installation
 ### Maxmind DB
 ```bash
-./update-geoip.sh country
-./update-geoip.sh city
-./update-geoip.sh asn
+./update-geoip.sh all
 ```
 
 ### Clone tool
