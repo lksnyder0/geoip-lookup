@@ -14,7 +14,7 @@ cd geoip-lookup
 ```bash
 sudo pip install pygeoip
 ```
-## Link so you can run it anywhere
+### Link so you can run it anywhere
 ```bash
 sudo ln -s $PWD/lookup.py /usr/bin/lookup
 sudo ln -s $PWD/update-geoip.sh /usr/bin/update-geoip
