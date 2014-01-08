@@ -1,6 +1,7 @@
 #!/usr/bin/env python2
 import os
 import sys
+from os.path import isfile
 try:
 	import argparse
 	opt = False
@@ -13,6 +14,17 @@ try:
 except ImportError:
 	print "Please install pygeoip library"
 	exit(1)
+
+def checkFile(location):
+	## location and permissions of database
+	try:
+		## will close file descriptor when we leave the with statement or error out
+		with open(location) as e:
+			pass
+	except IOError as e:
+		print "Error: %s %s" % (e.strerror, location)
+		exit(1)
+	return True
 
 def verifyIPs(ips):
 	import socket
@@ -33,11 +45,17 @@ def verifyIPs(ips):
 		return False
 
 def main():
-	if opt:
+	country = False
+	city = False
+	asn = False
+	if opt or True:
+		from optparse import OptionParser
 		usage = "usage: %prog [options] ip [ip ...]"
 		parser = OptionParser(usage=usage)
 		parser.add_option("-n", "--name", action="store_true", dest="name", default=False,
 			help="Print country name instead of country code")
+		parser.add_option("-t", "--country", dest="country", action="store_true", default=False,
+			help="Do country lookup")
 		parser.add_option("-d", "--database", dest="db", metavar="<db path>",
 			help="Path to maxmind GeoIP database", default="/usr/local/share/GeoIP/GeoIP.dat")
 		#City database
@@ -56,24 +74,33 @@ def main():
 			parser.print_help()
 		ips = args
 		if options.city:
-			lType = "city"
-			db = options.citydb
-		elif options.asn:
-			lType = "asn"
-			db = options.asndb
-		else:
-			lType = "country"
-			db = options.db
+			city = True
+			if checkFile(options.citydb):
+				citydb = options.citydb
+		if options.asn:
+			asn = True
+			if checkFile(options.asndb):
+				asndb = options.asndb
+		if options.country:
+			country = True
+			if checkFile(options.db):
+				db = options.db
+		if not city and not country and not asn:
+			country = True
+			if checkFile(options.db):
+				db = options.db
 		name = options.name
 	else:
 		parser = argparse.ArgumentParser()
 		parser.add_argument('ips', metavar="ip", nargs="+", help="ip address/es to lookup")
+		parser.add_argument("-co", "--country", dest="country", action="store_true", default=False,
+			help="Do country lookup")
 		parser.add_argument("-n", "--name", dest="name", action="store_true", default=False,
 			help="Print country names instead of country codes")
 		parser.add_argument("-d", "--database", dest="db", default="/usr/local/share/GeoIP/GeoIP.dat", 
 			metavar="<db path>", help="Path to maxmind GeoIP database")
 		parser.add_argument("-c", "--city", dest="city", action="store_true", default=False,
-			help="Do city lookup instead of country")
+			help="Do city lookup")
 		parser.add_argument("-dc", "--city-database", dest="citydb", default="/usr/local/share/GeoIP/GeoLiteCity.dat",
 			metavar="<city db path>", help="Path to maxmind city lite db")
 		parser.add_argument("-a", "--asn", dest="asn", action="store_true", default=False,
@@ -84,14 +111,21 @@ def main():
 		name = args.name
 		ips = args.ips
 		if args.city:
-			lType = "city"
-			db = args.citydb
-		elif args.asn:
-			lType = "asn"
-			db = args.asndb
-		else:
-			lType = "country"
-			db = args.db
+			city = True
+			if checkFile(args.citydb):
+				citydb = args.citydb
+		if args.asn:
+			asn = True
+			if checkFile(args.asndb):
+				asndb = args.asndb
+		if args.country:
+			country = True
+			if checkFile(args.db):
+				db = args.db
+		if not city and not country and not asn:
+			country = True
+			if checkFile(args.db):
+				db = args.db
 
 	## Verify shiz
 	## IP addresses
@@ -99,28 +133,22 @@ def main():
 		print "Error: Invalid ip provided"
 		exit(1)
 
-	## location and permissions of database
-	try:
-		## will close file descriptor when we leave the with statement or error out
-		with open(db) as e:
-			pass
-	except IOError as e:
-		print "Error: %s %s" % (e.strerror, db)
-		exit(1)
-
-	gi4 = pygeoip.GeoIP(db, pygeoip.MEMORY_CACHE)
 	for ip in ips:
-		if lType == "country":
+		co = ""
+		if country:
+			country = pygeoip.GeoIP(db, pygeoip.MEMORY_CACHE)
 			if name:
-				co = gi4.country_name_by_addr(ip)
+				co += ":" + country.country_name_by_addr(ip) 
 			else:
-				co = gi4.country_code_by_addr(ip)
-		elif lType == "asn":
-			co = gi4.asn_by_name(ip)
-		elif lType == "city":
-			r = gi4.record_by_addr(ip)
-			co = "%s, %s" % (r["city"], r["region_code"])
-		print "%s:%s" %(ip, co)
+				co += ":" + country.country_code_by_addr(ip)
+		if asn:
+			asn = pygeoip.GeoIP(asndb, pygeoip.MEMORY_CACHE)
+			co += ":" + asn.org_by_name(ip)
+		if city:
+			city = pygeoip.GeoIP(citydb, pygeoip.MEMORY_CACHE)
+			r = city.record_by_addr(ip)
+			co += ":%s, %s" % (r["city"], r["region_code"])
+		print "%s%s" %(ip, co)
 
 
 main()
