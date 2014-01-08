@@ -86,7 +86,7 @@ def main():
 			lType = "asn"
 			db = args.asndb
 		else:
-			ltype = "country"
+			lType = "country"
 			db = args.db
 
 	## Verify shiz
