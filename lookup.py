@@ -48,8 +48,7 @@ def main():
 	country = False
 	city = False
 	asn = False
-	if opt or True:
-		from optparse import OptionParser
+	if opt:
 		usage = "usage: %prog [options] ip [ip ...]"
 		parser = OptionParser(usage=usage)
 		parser.add_option("-n", "--name", action="store_true", dest="name", default=False,
