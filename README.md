@@ -9,12 +9,18 @@
 ```bash
 git clone git@10.16.251.135:security/geoip-lookup.git
 cd geoip-lookup
+```
+### Install pygeoip
+```bash
+sudo pip install pygeoip
+```
 ## Link so you can run it anywhere
+```bash
 sudo ln -s $PWD/lookup.py /usr/bin/lookup
 sudo ln -s $PWD/update-geoip.sh /usr/bin/update-geoip
 ```
 ## Usage
-If you are using python >=2.7 the usage is
+If you are using python 2.7.x the usage is
 
 ```
 usage: lookup.py [-h] [-n] [-d <db path>] [-c] [-dc <city db path>] [-a]
