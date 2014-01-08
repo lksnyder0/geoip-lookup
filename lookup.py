@@ -8,7 +8,11 @@ except ImportError:
 	from optparse import OptionParser
 	opt = True
 sys.path.append(os.path.dirname(os.path.realpath(__file__)))
-import pygeoip
+try:
+	import pygeoip
+except ImportError:
+	print "Please install pygeoip library"
+	exit(1)
 
 def verifyIPs(ips):
 	import socket
